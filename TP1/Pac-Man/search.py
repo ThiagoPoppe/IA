@@ -196,7 +196,36 @@ def nullHeuristic(state, problem=None):
 def greedySearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest heuristic first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    
+    openList = util.PriorityQueue()
+    exploredSet = set()
+
+    # Manually inserting starting node
+    start = {
+        'state': problem.getStartState(),
+        'actions': [],
+        'cost': heuristic(problem.getStartState(), problem)
+    }
+    openList.push(start, start['cost'])
+
+    while not openList.isEmpty():
+        node = openList.pop()
+        if node['state'] not in exploredSet:
+            exploredSet.add(node['state'])
+
+            if problem.isGoalState(node['state']):
+                return node['actions']
+
+            for successor in problem.getSuccessors(node['state']):
+                newNode = {
+                    'state': successor[0],
+                    'actions': node['actions'] + [successor[1]],
+                    'cost': heuristic(successor[0], problem)
+                }
+                openList.push(newNode, newNode['cost'])
+
+    print('*** Unable to find solution ***')
+    return []
 
 
 def aStarSearch(problem, heuristic=nullHeuristic):
