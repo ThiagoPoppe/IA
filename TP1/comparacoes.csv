@@ -1,0 +1,16 @@
+SearchAgent,Level,PathCost,Time,NodesExpanded,Score
+DFS,tinyMaze,10,0.0,15,500
+DFS,mediumMaze,130,0.0,146,380
+DFS,bigMaze,210,0.0,390,300
+BFS,tinyMaze,8,0.0,15,502
+BFS,mediumMaze,68,0.0,269,442
+BFS,bigMaze,210,0.0,620,300
+UCS,tinyMaze,8,0.0,15,502
+UCS,mediumMaze,68,0.0,269,442
+UCS,bigMaze,210,0.2,620,300
+GS,tinyMaze,8,0.0,8,502
+GS,mediumMaze,152,0.0,159,358
+GS,bigMaze,210,0.0,471,300
+A*,tinyMaze,8,0.0,13,502
+A*,mediumMaze,68,0.0,226,442
+A*,bigMaze,210,0.1,557,300

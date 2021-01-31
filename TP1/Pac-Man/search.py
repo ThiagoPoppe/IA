@@ -160,10 +160,9 @@ def uniformCostSearch(problem):
     # Manually inserting starting node
     start = {
         'state': problem.getStartState(),
-        'actions': [],
-        'cost': 0
+        'actions': []
     }
-    openList.push(start, start['cost'])
+    openList.push(start, 0)
 
     while not openList.isEmpty():
         node = openList.pop()
@@ -176,10 +175,10 @@ def uniformCostSearch(problem):
             for successor in problem.getSuccessors(node['state']):
                 newNode = {
                     'state': successor[0],
-                    'actions': node['actions'] + [successor[1]],
-                    'cost': node['cost'] + successor[2]
+                    'actions': node['actions'] + [successor[1]]
                 }
-                openList.push(newNode, newNode['cost'])
+                newPriority = problem.getCostOfActions(node['actions']) + successor[2]
+                openList.update(newNode, newPriority)
 
     print('*** Unable to find solution ***')
     return []
@@ -203,10 +202,9 @@ def greedySearch(problem, heuristic=nullHeuristic):
     # Manually inserting starting node
     start = {
         'state': problem.getStartState(),
-        'actions': [],
-        'cost': heuristic(problem.getStartState(), problem)
+        'actions': []
     }
-    openList.push(start, start['cost'])
+    openList.push(start, 0)
 
     while not openList.isEmpty():
         node = openList.pop()
@@ -219,10 +217,10 @@ def greedySearch(problem, heuristic=nullHeuristic):
             for successor in problem.getSuccessors(node['state']):
                 newNode = {
                     'state': successor[0],
-                    'actions': node['actions'] + [successor[1]],
-                    'cost': heuristic(successor[0], problem)
+                    'actions': node['actions'] + [successor[1]]
                 }
-                openList.push(newNode, newNode['cost'])
+                newPriority = heuristic(newNode['state'], problem)
+                openList.update(newNode, newPriority)
 
     print('*** Unable to find solution ***')
     return []
@@ -231,7 +229,36 @@ def greedySearch(problem, heuristic=nullHeuristic):
 def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    
+    openList = util.PriorityQueue()
+    exploredSet = set()
+
+    # Manually inserting starting node
+    start = {
+        'state': problem.getStartState(),
+        'actions': []
+    }
+    openList.push(start, 0)
+
+    while not openList.isEmpty():
+        node = openList.pop()
+        if node['state'] not in exploredSet:
+            exploredSet.add(node['state'])
+
+            if problem.isGoalState(node['state']):
+                return node['actions']
+
+            for successor in problem.getSuccessors(node['state']):
+                newNode = {
+                    'state': successor[0],
+                    'actions': node['actions'] + [successor[1]]
+                }
+                pathCost = problem.getCostOfActions(node['actions']) + successor[2]
+                newPriority = pathCost + heuristic(newNode['state'], problem)
+                openList.update(newNode, newPriority)
+
+    print('*** Unable to find solution ***')
+    return []
 
 
 def foodHeuristic(state, problem):
