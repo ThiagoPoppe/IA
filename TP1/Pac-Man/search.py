@@ -149,7 +149,6 @@ def breadthFirstSearch(problem):
     print('*** Unable to find solution ***')
     return []
 
-
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
@@ -291,8 +290,14 @@ def foodHeuristic(state, problem):
     """
     position, foodGrid = state
     "*** YOUR CODE HERE ***"
-    return 0
 
+    manhattanDistance = lambda x,y: abs(x[0] - y[0]) + abs(x[1] - y[1])
+
+    value = 0.0
+    for food in foodGrid.asList():
+        value = max(value, manhattanDistance(position, food))
+
+    return value
 
 # Abbreviations
 bfs = breadthFirstSearch
