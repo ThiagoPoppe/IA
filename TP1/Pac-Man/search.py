@@ -117,6 +117,7 @@ def depthFirstSearch(problem):
     print('*** Unable to find solution ***')
     return []
 
+
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
@@ -148,6 +149,7 @@ def breadthFirstSearch(problem):
 
     print('*** Unable to find solution ***')
     return []
+
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
